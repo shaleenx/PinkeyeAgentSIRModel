@@ -4,13 +4,13 @@ from limits import universe
 
 class Cattle:
 
-	def __init__(self, cattleId, x, y, x_min, x_max, y_min, y_max):
-		self.age = 0;
-		self.weight = random.randint(60, 100);
-		self.state = 0;
-		self.location = 0;
-		self.cattledId = cattleId;
-		"""
+    def __init__(self, cattleId, x, y, x_min, x_max, y_min, y_max):
+        self.age = 0
+        self.weight = random.randint(60, 100)
+        self.state = 0
+        self.location = 0
+        self.cattledId = cattleId
+        """
 		0 - farm_random; 1 - farm_traveling; 2 - road;
 		3 - sale_barn_1; 4 - stocker_random; 5 - stocker_traveling
 		6 - sale_barn_2; 7 - feed_lot; 8 - abattoir
