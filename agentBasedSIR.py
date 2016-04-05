@@ -41,13 +41,13 @@ saleBarn = SaleBarn(50, 96, 52, 125)
 feedlot = Feedlot(53, 96, 72, 125)
 
 def analyseGrid():
-	for i in range(len(ucl)):
+	for i in range(len(ucl)) and ucl[i].location != 8:
 		if ucl[i].state == 0:
 			for j in range(-1,2):
 				for k in range(-1,2):
 					if ucl[i].x + j >= ucl[i].x_min and ucl[i].x + j <= ucl[i].x_max and ucl[i].y + k >= ucl[i].y_min and ucl[i].y + k <= ucl[i].y_max:
 						for l in gridList[ucl[i].x + j][ucl[i].y + k]:
-							if ucl[l].state == 1:
+							if ucl[l].state == 1 and ucl[i].location != 8:
 								if random.random() < infProb:
 									ucl[i].state = ucl[i].state + 1
 									numS.append(numS[len(numS)-1] - 1)
