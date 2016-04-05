@@ -74,7 +74,27 @@ while True:
 				numI[len(numI)-1] = numI[len(numI)-1] - 1
 				numR[len(numR)-1] = numR[len(numR)-1] - 1
 		
+		if ucl[i].location == 3:
+			ucl[i].time1InSale = ucl[i].time1InSale - dt
+			if ucl[i].time1InSale <= 0:
+				ucl[i].location = ucl[i].location + 1
+				ucl[i].x_min = 0
+				ucl[i].x_max = 49
+				ucl[i].y_min = 96
+				ucl[i].y_max = 125
+				ucl[i].x = int(random.random()*49 + 1)
+				ucl[i].y = int(96 + random.random()*30)
+
+		if ucl[i].location == 6:
+			ucl[i].time2InSale = ucl[i].time2InSale - dt
+			if ucl[i].time2InSale <= 0:
+				ucl[i].location = ucl[i].location + 1
+				ucl[i].x_min = 53
+				ucl[i].x_max = 72
+				ucl[i].y_min = 96
+				ucl[i].y_max = 125
+
 		if ucl[i].location == 8:
 			numC[len(numC) - 1] = numC[len(numC) - 1] - 1
-	if numC[len(numC) - 1]==0:
+	if numC[len(numC) - 1]<=0:
 		break
