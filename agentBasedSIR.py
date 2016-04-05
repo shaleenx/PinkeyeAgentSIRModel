@@ -62,7 +62,7 @@ def analyseGrid():
 
 while True:
 	currentTime = currentTime + dt
-	
+
 	numS.append(numS[len(numS) - 1])
 	numI.append(numI[len(numI) - 1])
 	numR.append(numR[len(numR) - 1])
@@ -111,7 +111,6 @@ while True:
 			numC[len(numC) - 1] = numC[len(numC) - 1] - 1
 	
 	print currentTime, numC[len(numC) - 1], len(ucl)
-	
 	if numC[len(numC) - 1] <= 0:
 		break
 
