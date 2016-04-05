@@ -27,7 +27,7 @@ gridList = [[[] for x in range(gridWidth)] for x in range(gridHeight)]
 farmList = []
 
 for i in range(numberFarm):
-	farmList.append(Farm(16 * i + i, 0, 16 * (i + 1) + i + 1, 95, cInitProb))
+	farmList.append(Farm(16 * i + i, 0, 16 * (i + 1) + i - 1, 94, cInitProb))
 	farmList[i].initializeCattle(ucl, gridList)
 
 numS[0] = len(ucl) - 1
@@ -46,15 +46,16 @@ def analyseGrid():
 			for j in range(-1, 2):
 				for k in range(-1, 2):
 					if ucl[i].x + j >= ucl[i].x_min and ucl[i].x + j <= ucl[i].x_max and ucl[i].y + k >= ucl[i].y_min and ucl[i].y + k <= ucl[i].y_max:
-						print("["+str(ucl[i].x+j)+", "+str(ucl[i].y+k)+"]")
-						for l in gridList[ucl[i].x + j][ucl[i].y + k]:
-							if ucl[l].state == 1 and ucl[i].location != 8:
-								if random.random() < infProb:
-									ucl[i].state = ucl[i].state + 1
-									numS.append(numS[len(numS) - 1] - 1)
-									numI.append(numI[len(numI) - 1] + 1)
-									cumI.append(cumI[len(cumI) - 1] + 1)
-									break
+						# print("["+str(ucl[i].x+j)+", "+str(ucl[i].y+k)+"]")
+						if len(gridList[ucl[i].x + j][ucl[i].y + k]) is not 0:
+							for l in gridList[ucl[i].x + j][ucl[i].y + k]:
+								if ucl[l].state == 1 and ucl[i].location != 8:
+									if random.random() < infProb:
+										ucl[i].state = ucl[i].state + 1
+										numS.append(numS[len(numS) - 1] - 1)
+										numI.append(numI[len(numI) - 1] + 1)
+										cumI.append(cumI[len(cumI) - 1] + 1)
+										break
 					if ucl[i].state == 1:
 						break
 
