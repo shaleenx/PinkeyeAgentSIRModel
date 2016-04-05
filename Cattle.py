@@ -1,6 +1,7 @@
 import random
 import itertools
 
+
 class Cattle:
 
 	def __init__(self, cattleId, x, y, x_min, x_max, y_min, y_max):
