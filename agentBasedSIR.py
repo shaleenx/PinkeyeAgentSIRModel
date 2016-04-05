@@ -3,6 +3,7 @@ from SaleBarn import SaleBarn
 from Stocker import Stocker
 from Feedlot import Feedlot
 import random
+import subprocess
 
 # ================= Inital Constant ===================
 
@@ -26,6 +27,9 @@ ucl = []
 gridList = [[[] for x in range(gridHeight)] for x in range(gridWidth)]
 farmList = []
 
+fin = open("output", "w")
+print "Running Code"
+
 for i in range(numberFarm):
 	farmList.append(Farm(16 * i + i, 0, 16 * (i + 1) + i - 1, 94, cInitProb))
 	farmList[i].initializeCattle(ucl, gridList)
@@ -43,7 +47,6 @@ feedlot = Feedlot(53, 96, 72, 125)
 
 def analyseGrid():
 	for i in range(len(ucl)):
-
 		if ucl[i].state == 0 and ucl[i].location != 8:
 			for j in range(-1, 2):
 				for k in range(-1, 2):
@@ -52,7 +55,7 @@ def analyseGrid():
 						# if len(gridList[ucl[i].x + j][ucl[i].y + k]) is not 0:
 						for l in gridList[ucl[i].x + j][ucl[i].y + k]:
 							# print ucl[l].state, ucl[i].location
-							if ucl[l].state == 1 and ucl[i].location != 8:
+							if ucl[l].state == 1:
 								if random.random() <= infProb:
 									ucl[i].state = ucl[i].state + 1
 									numS[len(numS) - 1] = numS[len(numS) - 1] - 1
@@ -60,6 +63,8 @@ def analyseGrid():
 									cumI[len(cumI) - 1] = cumI[len(cumI) - 1] + 1
 									break
 					if ucl[i].state == 1:
+						break
+				if ucl[i].state == 1:
 						break
 
 while True:
@@ -112,11 +117,15 @@ while True:
 		if ucl[i].location == 8:
 			numC[len(numC) - 1] = numC[len(numC) - 1] - 1
 	
-	print currentTime, numS[len(numS) - 1], numI[len(numI) - 1], numR[len(numR) - 1], cumI[len(numI) - 1], numC[len(numC) - 1]
+	fin.write(str(currentTime) + " " + str(numS[len(numS) - 1]) + " " + str(numI[len(numI) - 1]) + " " + str(numR[len(numR) - 1]) + " " + str(cumI[len(numI) - 1]) + " " + str(numC[len(numC) - 1]) + "\n")
+
 	if numC[len(numC) - 1] <= 0:
 		break
 
+fin.close()
 
-# GNU Plot Command using the file output
-# 
-# plot "output" using ($1):($2) title "Susceptible" with linespoints lc "blue" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($3) title "Infected" with linespoints lc "red" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($4) title "Recovered" with linespoints lc "black" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($5) title "Cummulative Infected" with linespoints lc "cyan" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($6) title "Cattle Remaining" with linespoints lc "gold" lw 2 pt 7 ps 4 smooth cspline
+plot = subprocess.Popen(['gnuplot'], stdin=subprocess.PIPE)
+plot.stdin.write("""
+	plot "output" using ($1):($2) title "Susceptible" with linespoints lc "blue" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($3) title "Infected" with linespoints lc "red" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($4) title "Recovered" with linespoints lc "black" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($5) title "Cummulative Infected" with linespoints lc "cyan" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($6) title "Cattle Remaining" with linespoints lc "gold" lw 2 pt 7 ps 4 smooth cspline	
+	pause 50
+	""")
