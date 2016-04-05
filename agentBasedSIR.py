@@ -28,6 +28,7 @@ farmList = []
 
 for i in range(numberFarm):
 	farmList.append(Farm(16 * i + i, 0, 16 * (i + 1) + i - 1, 94, cInitProb))
+	print 16 * i + i, 0, 16 * (i + 1) + i - 1, 94
 	farmList[i].initializeCattle(ucl, gridList)
 
 numS[0] = len(ucl) - 1
@@ -61,7 +62,7 @@ def analyseGrid():
 
 while True:
 	currentTime = currentTime + dt
-	print currentTime
+	# print currentTime
 	numC.append(len(ucl))
 	analyseGrid()
 	numR.append(numR[len(numR) - 1])

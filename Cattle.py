@@ -79,7 +79,7 @@ class Cattle:
 					grid[self.x][self.y].remove(self.cattleId)
 					self.x = new_x
 					self.y = new_y
-					grid[self.x][self.y].append(self.CattlettleId)
+					grid[self.x][self.y].append(self.cattleId)
 
 		elif self.location == 5:  # Stocker_traveling
 			if self.x == self.x_max:
