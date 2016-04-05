@@ -39,6 +39,15 @@ class Cattle:
 		elif self.location == 1:  # Farm_traveling
 			if self.y == self.y_max:
 				self.location = 2
+				self.y_min = universe['road1']['minY']
+				self.y_max = universe['road1']['maxY']
+				if(self.x < universe['salebarn']['minX']):
+					self.x_min = universe['road1']['minX']
+					self.x_max = universe['road1']['maxX']
+				else
+					self.x_min = universe['road2']['minX']
+					self.x_max = universe['road2']['maxX']
+
 			grid[self.x][self.y].remove(self.cattleId)
 			self.y = self.y + 1
 			grid[self.x][self.y].append(self.cattleId)

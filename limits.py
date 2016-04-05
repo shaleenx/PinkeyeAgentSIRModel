@@ -35,6 +35,18 @@ universe = {
 		'minY': 0,
 		'maxY': 94
 	},
+	'road1': {
+		'minX': 0,
+		'maxX': 50,
+		'minY': 95,
+		'maxY': 95
+	},
+	'road2': {
+		'minX': 52,
+		'maxX': 100,
+		'minY': 95,
+		'maxY': 95
+	},
 	'stocker': {
 		'minX': 0,
 		'maxX': 49,
