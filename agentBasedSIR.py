@@ -93,6 +93,7 @@ while True:
 				ucl[i].x_max = 72
 				ucl[i].y_min = 96
 				ucl[i].y_max = 125
+				ucl[i].x = ucl[i].x_min
 
 		if ucl[i].location == 8:
 			numC[len(numC) - 1] = numC[len(numC) - 1] - 1
