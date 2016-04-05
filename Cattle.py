@@ -29,7 +29,7 @@ class Cattle:
 		if self.location == 0:  # Farm_random
 			new_x, new_y = self.random_walk(self.x, self.y)
 			# Check Limits
-			if (new_x > self.x_min and new_x < self.x_max and new_y > self.y_min and new_y < self.y_max):
+			if (new_x >= self.x_min and new_x <= self.x_max and new_y >= self.y_min and new_y <= self.y_max):
 				if len(grid[new_x][new_y]) == 0:
 					grid[self.x][self.y].remove(self.cattleId)
 					self.x = new_x
@@ -65,7 +65,7 @@ class Cattle:
 		elif self.location == 3:  # Sale_barn_1
 			new_x, new_y = self.random_walk(self.x, self.y)
 			# Check Limits
-			if (new_x > self.x_min and new_x < self.x_max and new_y > self.y_min and new_y < self.y_max):
+			if (new_x >= self.x_min and new_x <= self.x_max and new_y >= self.y_min and new_y <= self.y_max):
 				grid[self.x][self.y].remove(self.cattleId)
 				self.x = new_x
 				self.y = new_y
@@ -74,7 +74,7 @@ class Cattle:
 		elif self.location == 4:  # Stocker_random
 			new_x, new_y = self.random_walk(self.x, self.y)
 			# Check Limits
-			if (new_x > self.x_min and new_x < self.x_max and new_y > self.y_min and new_y < self.y_max):
+			if (new_x >= self.x_min and new_x <= self.x_max and new_y >= self.y_min and new_y <= self.y_max):
 				if len(grid[new_x][new_y]) == 0:
 					grid[self.x][self.y].remove(self.cattleId)
 					self.x = new_x
@@ -91,7 +91,7 @@ class Cattle:
 		elif self.location == 6:  # Sale_barn_2
 			new_x, new_y = self.random_walk(self.x, self.y)
 			# Check Limits
-			if (new_x > self.x_min and new_x < self.x_max and new_y > self.y_min and new_y < self.y_max):
+			if (new_x >= self.x_min and new_x <= self.x_max and new_y >= self.y_min and new_y <= self.y_max):
 				grid[self.x][self.y].remove(self.cattleId)
 				self.x = new_x
 				self.y = new_y
@@ -99,7 +99,7 @@ class Cattle:
 
 		elif self.location == 7:  # Feed_lot
 			new_x = x + 1
-			if (new_x < self.x_max):
+			if (new_x <= self.x_max):
 				if len(grid[new_x, new_y]) == 0:
 					grid[self.x][self.y].remove(self.cattleId)
 					self.x = new_x
