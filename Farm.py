@@ -43,5 +43,5 @@ class Farm:
 def birth(p):
 	if random() < p:
 		return True
-	else
+	else:
 		return False
