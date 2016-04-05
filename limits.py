@@ -12,26 +12,26 @@ universe = {
 		'maxY': 94
 	},
 	'farm2': {
-		'minX': 35,
-		'maxX': 50,
+		'minX': 34,
+		'maxX': 49,
 		'minY': 0,
 		'maxY': 94
 	},
 	'farm3': {
-		'minX': 52,
-		'maxX': 67,
+		'minX': 51,
+		'maxX': 66,
 		'minY': 0,
 		'maxY': 94
 	},
 	'farm4': {
-		'minX': 69,
-		'maxX': 84,
+		'minX': 68,
+		'maxX': 83,
 		'minY': 0,
 		'maxY': 94
 	},
 	'farm5': {
-		'minX': 71,
-		'maxX': 86,
+		'minX': 85,
+		'maxX': 100,
 		'minY': 0,
 		'maxY': 94
 	},
