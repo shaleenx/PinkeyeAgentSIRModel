@@ -44,7 +44,7 @@ class Cattle:
 				if(self.x < universe['salebarn']['minX']):
 					self.x_min = universe['road1']['minX']
 					self.x_max = universe['road1']['maxX']
-				else
+				else:
 					self.x_min = universe['road2']['minX']
 					self.x_max = universe['road2']['maxX']
 
@@ -107,9 +107,10 @@ class Cattle:
 				grid[self.x][self.y].append(self.cattleId)
 
 		elif self.location == 7:  # Feed_lot
-			new_x = x + 1
+			new_x = self.x + 1
+			new_y = self.y
 			if (new_x <= self.x_max):
-				if len(grid[new_x, new_y]) == 0:
+				if len(grid[new_x][new_y]) == 0:
 					grid[self.x][self.y].remove(self.cattleId)
 					self.x = new_x
 					grid[self.x][self.y].append(self.cattleId)
