@@ -2,7 +2,7 @@
 % to establish the days sick to be 0 for an infected calf, and to establish various
 % category counters
 
-function calf = cattleInit(infected)
+function calf = cattleInit(farmNo, x, y, infected)
     calf = tlist(["infected", "weight", "daysSick"]);
     calf.weight = rand()*40 + 60 + 1;
     if infected == 1 then
