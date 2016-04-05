@@ -30,6 +30,7 @@ for i in range(numberFarm):
 	farmList.append(Farm(16 * i + i, 0, 16 * (i + 1) + i - 1, 94, cInitProb))
 	farmList[i].initializeCattle(ucl, gridList)
 
+ucl[i].state = ucl[i].state + 1
 numS[0] = len(ucl) - 1
 numI[0] = 1
 numC[0] = len(ucl)
@@ -48,15 +49,16 @@ def analyseGrid():
 				for k in range(-1, 2):
 					if ucl[i].x + j >= ucl[i].x_min and ucl[i].x + j <= ucl[i].x_max and ucl[i].y + k >= ucl[i].y_min and ucl[i].y + k <= ucl[i].y_max:
 						# print("["+str(ucl[i].x+j)+", "+str(ucl[i].y+k)+"]")
-						if len(gridList[ucl[i].x + j][ucl[i].y + k]) is not 0:
-							for l in gridList[ucl[i].x + j][ucl[i].y + k]:
-								if ucl[l].state == 1 and ucl[i].location != 8:
-									if random.random() < infProb:
-										ucl[i].state = ucl[i].state + 1
-										numS[len(numS) - 1] = numS[len(numS) - 1] - 1
-										numI[len(numI) - 1] = numI[len(numI) - 1] + 1
-										cumI[len(cumI) - 1] = cumI[len(cumI) - 1] + 1
-										break
+						# if len(gridList[ucl[i].x + j][ucl[i].y + k]) is not 0:
+						for l in gridList[ucl[i].x + j][ucl[i].y + k]:
+							# print ucl[l].state, ucl[i].location
+							if ucl[l].state == 1 and ucl[i].location != 8:
+								if random.random() <= infProb:
+									ucl[i].state = ucl[i].state + 1
+									numS[len(numS) - 1] = numS[len(numS) - 1] - 1
+									numI[len(numI) - 1] = numI[len(numI) - 1] + 1
+									cumI[len(cumI) - 1] = cumI[len(cumI) - 1] + 1
+									break
 					if ucl[i].state == 1:
 						break
 
@@ -73,14 +75,14 @@ while True:
 
 	for i in range(len(ucl)):
 		ucl[i].move(gridList)
-		ucl[i].increase_weight()
+		ucl[i].increase_weight(gridList)
 
 		if ucl[i].state == 1:
 			ucl[i].daysSick = ucl[i].daysSick + dt
-			if ucl[i].daysSick == infPeriod:
+			if ucl[i].daysSick >= infPeriod:
 				ucl[i].state = ucl[i].state + 1
 				numI[len(numI) - 1] = numI[len(numI) - 1] - 1
-				numR[len(numR) - 1] = numR[len(numR) - 1] - 1
+				numR[len(numR) - 1] = numR[len(numR) - 1] + 1
 
 		if ucl[i].location == 3:
 			ucl[i].time1InSale = ucl[i].time1InSale - dt
@@ -110,8 +112,11 @@ while True:
 		if ucl[i].location == 8:
 			numC[len(numC) - 1] = numC[len(numC) - 1] - 1
 	
-	print currentTime, numC[len(numC) - 1], len(ucl)
+	print currentTime, numS[len(numS) - 1], numI[len(numI) - 1], numR[len(numR) - 1], cumI[len(numI) - 1], numC[len(numC) - 1]
 	if numC[len(numC) - 1] <= 0:
 		break
 
-print numS, numI, numR, cumI, numC
+
+# GNU Plot Command using the file output
+# 
+# plot "output" using ($1):($2) title "Susceptible" with linespoints lc "blue" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($3) title "Infected" with linespoints lc "red" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($4) title "Recovered" with linespoints lc "black" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($5) title "Cummulative Infected" with linespoints lc "cyan" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($6) title "Cattle Remaining" with linespoints lc "gold" lw 2 pt 7 ps 4 smooth cspline

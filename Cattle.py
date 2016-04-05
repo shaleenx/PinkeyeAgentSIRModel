@@ -109,13 +109,16 @@ class Cattle:
 		elif self.location == 7:  # Feed_lot
 			new_x = self.x + 1
 			new_y = self.y
+
+			# print self.weight, self.x, self.x_max
+
 			if (new_x <= self.x_max):
 				if len(grid[new_x][new_y]) == 0:
 					grid[self.x][self.y].remove(self.cattleId)
 					self.x = new_x
 					grid[self.x][self.y].append(self.cattleId)
 
-	def increase_weight(self):
+	def increase_weight(self, grid):
 		incr = 0
 		if self.location == 0:
 			incr = random.random() * 0.25 + 0.5
@@ -133,6 +136,7 @@ class Cattle:
 
 		if self.location == 7 and self.weight > 1300 and self.x == self.x_max:
 			self.location = 8
+			grid[self.x][self.y].remove(self.cattleId)
 
 	def random_walk(self, x, y):
 		new_x = x
