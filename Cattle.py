@@ -16,21 +16,15 @@ class Cattle:
 		3 - sale_barn_1; 4 - stocker_random; 5 - stocker_traveling
 		6 - sale_barn_2; 7 - feed_lot; 8 - abattoir
 		"""
-			self.x = x
-			self.y = y
-			self.x_min = x_min
-			self.x_max = x_max
-			self.y_min = y_min
-			self.y_max = y_max
-			self.daysSick = 0
-			self.time1InSale = random.random() * 4 + 1
-			self.time2InSale = random.random() * 4 + 1
-
-		def infect(self):
-			self.state = self.state + 1
-
-		def recover(self):
-			self.state = self.state + 1
+		self.x = x
+		self.y = y
+		self.x_min = x_min
+		self.x_max = x_max
+		self.y_min = y_min
+		self.y_max = y_max
+		self.daysSick = 0
+		self.time1InSale = random.random() * 4 + 1
+		self.time2InSale = random.random() * 4 + 1
 
 		def move(self, grid):
 			if self.location == 0:  # Farm_random
@@ -43,25 +37,33 @@ class Cattle:
 						self.y = new_y
 						grid[self.x, self.y].append(self.cattleId)
 
-			if self.location == 1:  # Farm_traveling
+			elif self.location == 1:  # Farm_traveling
 				if self.y == y_max:
-					self.location = 2
+					self.location = 2;
+				grid[self.x, self.y].remove(self.cattleId)
 				self.y = self.y + 1
+				grid[self.x, self.y].append(self.cattleId)
 
-			if self.location == 2:  # Road
-				if self.x < 50:
+			elif self.location == 2:  # Road
+				if self.x < universe['salebarn']['minX']:
+					grid[self.x, self.y].remove(self.cattleId)
 					self.x = self.x + 1
-				elif self > 52:
+					grid[self.x, self.y].append(self.cattleId)
+				elif self > universe['salebarn']['maxX']:
+					grid[self.x, self.y].remove(self.cattleId)
 					self.x = self.x - 1
+					grid[self.x, self.y].append(self.cattleId)
 				else:
+					grid[self.x, self.y].remove(self.cattleId)
 					self.y = self.y + 1
+					grid[self.x, self.y].append(self.cattleId)
 					self.location = 3
 					self.x_min = universe['salebarn']['minX']
 					self.x_max = universe['salebarn']['maxX']
 					self.y_min = universe['salebarn']['minY']
 					self.y_max = universe['salebarn']['maxY']
 
-			if self.location == 3:  # Sale_barn_1
+			elif self.location == 3:  # Sale_barn_1
 				new_x, new_y = self.random_walk(self.x, self.y)
 				# Check Limits
 				if (new_x > self.x_min and new_x < self.x_max and new_y > self.y_min and new_y < self.y_max):
@@ -70,17 +72,39 @@ class Cattle:
 					self.y = new_y
 					grid[self.x, self.y].append(self.cattleId)
 
-			if self.location == 4:  # Stocker_random
-				new_x, new_y =
+			elif self.location == 4:  # Stocker_random
+				new_x, new_y = self.random_walk(self.x, self.y)
+				# Check Limits
+				if (new_x > self.x_min and new_x < self.x_max and new_y > self.y_min and new_y < self.y_max):
+					if len(grid[new_x, new_y]) == 0:
+						grid[self.x, self.y].remove(self.cattleId)
+						self.x = new_x
+						self.y = new_y
+						grid[self.x, self.y].append(self.cattleId)
 
-			if self.location == 5:  # Stocker_traveling
-				new_x, new_y =
+			elif self.location == 5:  # Stocker_traveling
+				if self.x == x_max:
+					self.location = 6;
+				grid[self.x, self.y].remove(self.cattleId)
+				self.x = self.x + 1
+				grid[self.x, self.y].append(self.cattleId)
 
-			if self.location == 6:  # Sale_barn_2
+			elif self.location == 6:  # Sale_barn_2
+				new_x, new_y = self.random_walk(self.x, self.y)
+				# Check Limits
+				if (new_x > self.x_min and new_x < self.x_max and new_y > self.y_min and new_y < self.y_max):
+					grid[self.x, self.y].remove(self.cattleId)
+					self.x = new_x
+					self.y = new_y
+					grid[self.x, self.y].append(self.cattleId)
 
-			if self.location == 7:  # Feed_lot
-
-			if self.location == 8:  # Abattoir
+			elif self.location == 7:  # Feed_lot
+				new_x = x + 1;
+				if (new_x < self.x_max):
+					if len(grid[new_x, new_y]) == 0:
+						grid[self.x, self.y].remove(self.cattleId)
+						self.x = new_x
+						grid[self.x, self.y].append(self.cattleId)
 
 		def increase_weight(self):
 			incr = 0
@@ -98,8 +122,8 @@ class Cattle:
 			if self.location == 4 and self.weight > 900:
 				self.location = 5
 
-			if self.location = 7 and self.weight > 1300:
-				self.location =  # Abattoir
+			if self.location = 7 and self.weight > 1300 and self.x == self.x_max:
+				self.location =  8
 
 		def random_walk(self, x, y):
 			new_x = x
