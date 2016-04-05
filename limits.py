@@ -37,19 +37,19 @@ universe = {
 	},
 	'stocker': {
 		'minX': 0,
-		'maxX': 29,
+		'maxX': 49,
 		'minY': 96,
 		'maxY': 125
 	},
 	'salebarn': {
-		'minX': 30,
-		'maxX': 32,
+		'minX': 50,
+		'maxX': 52,
 		'minY': 96,
 		'maxY': 125
 	},
 	'feedlot': {
-		'minX': 33,
-		'maxX': 52,
+		'minX': 53,
+		'maxX': 72,
 		'minY': 96,
 		'maxY': 125
 	}
