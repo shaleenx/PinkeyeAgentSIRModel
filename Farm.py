@@ -32,7 +32,7 @@ class Farm:
 				# If probabilistic birth happens,
 				if birth(self.p):
 					# Create new cattle
-					c = Cattle(i, j)
+					c = Cattle(i, j, self.minX, self.maxX, self.minY, self.maxY)
 					# Add cattle to Universal Cattle List (UCL)
 					ucl.append(c)
 					# Place cattle on grid
