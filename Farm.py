@@ -2,14 +2,14 @@ from Cattle import Cattle
 from random import random
 
 
-class farm:
+class Farm:
 	''' Class for farm area '''
 	def __init__(self, minX, minY, maxX, maxY, p):
 		self.minX = minX
 		self.minY = minY
 		self.maxX = maxX
 		self.maxY = maxY
-		self.height = maxY - minY
+		self.height  = maxY - minY
 		self.width = maxX - minX
 		self.p = p
 
