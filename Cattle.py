@@ -1,6 +1,6 @@
 import random
 import itertools
-
+from limits import universe
 
 class Cattle:
 
@@ -54,10 +54,10 @@ class Cattle:
 			else
 				self.y = self.y + 1;
 				self.location = 3;
-				self.x_min = ;
-				self.x_max = ;
-				self.y_min = ;
-				self.y_max = ;
+				self.x_min = universe['salebarn']['minX'];
+				self.x_max = universe['salebarn']['maxX'];
+				self.y_min = universe['salebarn']['minY'];
+				self.y_max = universe['salebarn']['maxY'];
 
 		if self.location == 3:	#Sale_barn_1
 			new_x, new_y = self.random_walk(self.x, self.y);
