@@ -4,6 +4,8 @@ from Stocker import Stocker
 from Feedlot import Feedlot
 import random
 import subprocess
+import matplotlib.animation as animation
+import matplotlib.pyplot as plt
 
 # ================= Inital Constant ===================
 
@@ -67,7 +69,8 @@ def analyseGrid():
 				if ucl[i].state == 1:
 						break
 
-while True:
+def scheduler(framecounter):
+# while True:
 	currentTime = currentTime + dt
 
 	numS.append(numS[len(numS) - 1])
@@ -82,7 +85,7 @@ while True:
 		ucl[i].move(gridList)
 		ucl[i].increase_weight(gridList)
 
-		if ucl[i].state == 1:
+		if (ucl[i].state == 1 and ucl[i].location != 1 and ucl[i].location !=2):
 			ucl[i].daysSick = ucl[i].daysSick + dt
 			if ucl[i].daysSick >= infPeriod:
 				ucl[i].state = ucl[i].state + 1
@@ -116,16 +119,23 @@ while True:
 
 		if ucl[i].location == 8:
 			numC[len(numC) - 1] = numC[len(numC) - 1] - 1
-	
+
 	fin.write(str(currentTime) + " " + str(numS[len(numS) - 1]) + " " + str(numI[len(numI) - 1]) + " " + str(numR[len(numR) - 1]) + " " + str(cumI[len(numI) - 1]) + " " + str(numC[len(numC) - 1]) + "\n")
 
-	if numC[len(numC) - 1] <= 0:
-		break
+	# if numC[len(numC) - 1] <= 0:
+	# 	break
+
+fig, ax = plt.subplots()
+mat = ax.matshow(grid)
+ani = animation.FuncAnimation(fig, scheduler, interval=50, blit=True,
+                              frames=2200)
+plt.show()
+
 
 fin.close()
 
-plot = subprocess.Popen(['gnuplot'], stdin=subprocess.PIPE)
-plot.stdin.write("""
-	plot "output" using ($1):($2) title "Susceptible" with linespoints lc "blue" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($3) title "Infected" with linespoints lc "red" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($4) title "Recovered" with linespoints lc "black" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($5) title "Cummulative Infected" with linespoints lc "cyan" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($6) title "Cattle Remaining" with linespoints lc "gold" lw 2 pt 7 ps 4 smooth cspline	
-	pause 50
-	""")
+# plot = subprocess.Popen(['gnuplot'], stdin=subprocess.PIPE)
+# plot.stdin.write("""
+# 	plot "output" using ($1):($2) title "Susceptible" with linespoints lc "blue" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($3) title "Infected" with linespoints lc "red" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($4) title "Recovered" with linespoints lc "black" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($5) title "Cummulative Infected" with linespoints lc "cyan" lw 2 pt 7 ps 4 smooth cspline, "output" using ($1):($6) title "Cattle Remaining" with linespoints lc "gold" lw 2 pt 7 ps 4 smooth cspline	
+# 	pause 50
+# 	""")
