@@ -133,6 +133,7 @@ def update(data):
 	for i in range(gridWidth):
 		for j in range(gridHeight):
 			cell = gridList[i][j]
+<<<<<<< HEAD
 			if len(cell) is 0:  #Empty Cell
 				newGrid[i, j] = 127
 			elif len(cell) is 1 and ucl[cell[0]].state is 0:    #Susceptible
@@ -146,6 +147,21 @@ def update(data):
 				for k in cell:
 					if ucl[k].state is 1:   #Stacking cattle and at least one Infected
 						newGrid[i, j] = 197
+=======
+			if len(cell) is 0:	#Empty Cell
+				newGrid[i, j] = 0
+			elif len(cell) is 1 and ucl[cell[0]].state is 0:	#Susceptible
+				newGrid[i, j] = 150
+			elif len(cell) is 1 and ucl[cell[0]].state is 1:	#Infected
+				newGrid[i, j] = 250
+			elif len(cell) is 1 and ucl[cell[0]].state is 2:	#Recovered
+				newGrid[i, j] = 180
+			elif len(cell) is not 1:
+				newGrid[i, j] = 20		#Stacking cattle and No Infected
+				for k in cell:
+					if ucl[k].state is 1:	#Stacking cattle and at least one Infected
+						newGrid[i, j] = 135
+>>>>>>> 448d881a2dfdfa2a36c30b50640aa9ea9ac5a4c0
 						break
 	
 	#for i in range(126):
