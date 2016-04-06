@@ -146,6 +146,12 @@ def update(data):
 					if ucl[k].state is 1:
 						newGrid[i, j] = 135
 						break
+	
+	for i in range(126):
+		newGrid[0, i] = i
+	for i in range(127, 253):
+		newGrid[1, i-127] = i
+
 	mat.set_data(newGrid)
 	grid = newGrid
 	return [mat]
