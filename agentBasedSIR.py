@@ -6,17 +6,18 @@ import random
 import subprocess
 import matplotlib.animation as animation
 import matplotlib.pyplot as plt
+import numpy as np
 
 # ================= Inital Constant ===================
 
-cInitProb = 0.1
+cInitProb = 0.02
 gridHeight = 126
 gridWidth = 101
 numberFarm = 6
 dt = 0.25
 currentTime = 0
-infPeriod = 40
-infProb = 1
+infPeriod = 200
+infProb = 0.2
 
 numS = [0]
 numI = [0]
@@ -27,6 +28,9 @@ numC = [0]
 # ================= Inital Constant ===================
 ucl = []
 gridList = [[[] for x in range(gridHeight)] for x in range(gridWidth)]
+grid = np.random.choice([255], gridHeight*gridWidth, p=[1]).reshape(gridWidth, gridHeight)
+grid[0, 0] = 0
+print grid
 farmList = []
 
 fin = open("output", "w")
@@ -36,7 +40,7 @@ for i in range(numberFarm):
 	farmList.append(Farm(16 * i + i, 0, 16 * (i + 1) + i - 1, 94, cInitProb))
 	farmList[i].initializeCattle(ucl, gridList)
 
-ucl[i].state = ucl[i].state + 1
+ucl[1].state = ucl[1].state + 1
 numS[0] = len(ucl) - 1
 numI[0] = 1
 numC[0] = len(ucl)
@@ -69,8 +73,10 @@ def analyseGrid():
 				if ucl[i].state == 1:
 						break
 
-def scheduler(framecounter):
-# while True:
+def update(data):
+	# while True:
+	global grid, currentTime
+	newGrid = grid.copy()
 	currentTime = currentTime + dt
 
 	numS.append(numS[len(numS) - 1])
@@ -122,13 +128,34 @@ def scheduler(framecounter):
 
 	fin.write(str(currentTime) + " " + str(numS[len(numS) - 1]) + " " + str(numI[len(numI) - 1]) + " " + str(numR[len(numR) - 1]) + " " + str(cumI[len(numI) - 1]) + " " + str(numC[len(numC) - 1]) + "\n")
 
+	# Map gridList to grid
+	for i in range(gridWidth):
+		for j in range(gridHeight):
+			cell = gridList[i][j]
+			if len(cell) is 0:
+				newGrid[i, j] = 0
+			elif len(cell) is 1 and ucl[cell[0]].state is 0:
+				newGrid[i, j] = 150
+			elif len(cell) is 1 and ucl[cell[0]].state is 1:
+				newGrid[i, j] = 250
+			elif len(cell) is 1 and ucl[cell[0]].state is 2:
+				newGrid[i, j] = 180
+			elif len(cell) is not 1:
+				newGrid[i, j] = 20
+				for k in cell:
+					if ucl[k].state is 1:
+						newGrid[i, j] = 135
+						break
+	mat.set_data(newGrid)
+	grid = newGrid
+	return [mat]
 	# if numC[len(numC) - 1] <= 0:
 	# 	break
 
 fig, ax = plt.subplots()
 mat = ax.matshow(grid)
-ani = animation.FuncAnimation(fig, scheduler, interval=50, blit=True,
-                              frames=2200)
+# ani = animation.FuncAnimation(fig, scheduler, interval=50, frames=20)
+ani = animation.FuncAnimation(fig, update, interval=50, save_count=50)
 plt.show()
 
 
