@@ -173,11 +173,13 @@ ax.text((universe['farm5']['minY']+universe['farm5']['maxY'])/2,(universe['farm5
 ax.text((universe['feedlot']['minY']+universe['feedlot']['maxY'])/2,(universe['feedlot']['minX']+universe['feedlot']['maxX'])/2,'feedlot')
 ax.text((universe['salebarn']['minY']+universe['salebarn']['maxY'])/2,(universe['salebarn']['minX']+universe['salebarn']['maxX'])/2,'salebarn')
 ax.text((universe['stocker']['minY']+universe['stocker']['maxY'])/2,(universe['stocker']['minX']+universe['stocker']['maxX'])/2,'stocker')
+ax.text((universe['abbatoir']['minY']+universe['abbatoir']['maxY'])/2,(universe['abbatoir']['minX']+universe['abbatoir']['maxX'])/2,'abbatoir')
 plt.legend((['Empty:green' ,'Susceptible:blue','Infected:red','Recovered:yellow','No Ill Stacked:dark blue','>1 Ill Stacked: dark red']),loc='lower right')
+
 # ani = animation.FuncAnimation(fig, scheduler, interval=50, frames=20)
 ani = animation.FuncAnimation(fig, update, interval=50, save_count=50)
 plt.show()
-
+plt.close(fig)
 
 fin.close()
 

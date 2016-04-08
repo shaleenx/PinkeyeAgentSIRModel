@@ -64,5 +64,11 @@ universe = {
 		'maxX': 72,
 		'minY': 96,
 		'maxY': 125
+	},
+	'abbatoir': {
+		'minX': 73,
+		'maxX': 100,
+		'minY': 96,
+		'maxY': 125
 	}
 }
